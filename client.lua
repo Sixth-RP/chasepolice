@@ -64,7 +64,7 @@ local function SpawnPoliceUnit(spawnCoords)
         nodeCoords = vector3(nodeCoords.x, nodeCoords.y, groundZ)
     end
     
-    -- Find nearest road
+    -- Find nearest road (nodeType=1: road node, radius=3.0, flags=0)
     local retval, roadPos = GetClosestVehicleNode(nodeCoords.x, nodeCoords.y, nodeCoords.z, 1, 3.0, 0)
     if not retval then
         roadPos = nodeCoords
@@ -128,9 +128,9 @@ local function SpawnPoliceHelicopter()
     SetPedKeepTask(pilot, true)
     SetModelAsNoLongerNeeded(pilotHash)
     
-    -- Spawn gunner
+    -- Spawn gunner (seat 0 = passenger seat for gunner role)
     local gunnerHash = LoadModel('s_m_y_swat_01')
-    local gunner = CreatePedInsideVehicle(heli, 4, gunnerHash, 1, true, false)
+    local gunner = CreatePedInsideVehicle(heli, 4, gunnerHash, 0, true, false)
     GiveWeaponToPed(gunner, GetHashKey('WEAPON_CARBINERIFLE'), 999, false, true)
     TaskCombatPed(gunner, playerPed, 0, 16)
     SetPedKeepTask(gunner, true)
